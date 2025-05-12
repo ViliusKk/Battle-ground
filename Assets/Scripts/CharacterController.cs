@@ -59,7 +59,7 @@ public class CharacterController : MonoBehaviour
 
     void Jump()
     {
-        rb.velocity = new Vector3(moveVelocity.x, jumpForce, moveVelocity.z);
+        rb.velocity = new Vector3(moveVelocity.x, 0, moveVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
