@@ -9,6 +9,9 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotationSpeed = 5f;
     public float scrollSensitivity = 2f;
 
+    public float minZoom = 1f;
+    public float maxZoom = 10f;
+
     private float currentX;
     private float currentY;
     private float currentZoom;
@@ -27,6 +30,7 @@ public class ThirdPersonCamera : MonoBehaviour
         
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         currentZoom += scroll * scrollSensitivity;
+        //currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
     }
 
     void LateUpdate()

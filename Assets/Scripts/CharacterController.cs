@@ -24,6 +24,8 @@ public class CharacterController : MonoBehaviour
     private Vector3 moveInput;
     private Vector3 moveVelocity;
     private int attackIndex;
+    private float attackCooldown = 1f;
+    private float attackTimer;
     
     
     [Header("Animations")]
@@ -47,16 +49,17 @@ public class CharacterController : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer >= dashCooldown)
         {
             Dash();
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && attackTimer >= attackCooldown)
         {
             Attack();
         }
         
-        dashTimer -= Time.deltaTime;
+        dashTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
         animator.SetBool("IsMoving", moveInput != Vector3.zero);
     }
 
@@ -76,7 +79,7 @@ public class CharacterController : MonoBehaviour
         var dashDir = moveInput != Vector3.zero ? moveInput : transform.forward;
         
         rb.AddForce(dashDir.normalized * dashForce, ForceMode.Impulse);
-        dashTimer = dashCooldown;
+        dashTimer = 0;
     }
 
     void Attack()
@@ -90,5 +93,7 @@ public class CharacterController : MonoBehaviour
         
         animator.Play(attacks[attackIndex++]); // teacher's version
         attackIndex %= attacks.Length;
+
+        attackTimer = 0;
     }
 }
