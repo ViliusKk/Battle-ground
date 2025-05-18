@@ -23,6 +23,13 @@ public class CharacterController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 moveInput;
     private Vector3 moveVelocity;
+    private int attackIndex;
+    
+    
+    [Header("Animations")]
+    public Animator animator;
+    public string[] attacks;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,6 +57,7 @@ public class CharacterController : MonoBehaviour
         }
         
         dashTimer -= Time.deltaTime;
+        animator.SetBool("IsMoving", moveInput != Vector3.zero);
     }
 
     void FixedUpdate()
@@ -77,5 +85,10 @@ public class CharacterController : MonoBehaviour
         print(damage);
         
         //TODO: play animation
+        
+        //animator.Play(attacks[Random.Range(0, attacks.Length)]); // my version
+        
+        animator.Play(attacks[attackIndex++]); // teacher's version
+        attackIndex %= attacks.Length;
     }
 }
