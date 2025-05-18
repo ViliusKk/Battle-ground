@@ -22,8 +22,8 @@ public class ThirdPersonCamera : MonoBehaviour
     
     void Update()
     {
-        currentX = Input.GetAxis("Mouse X") * rotationSpeed;
-        currentY = Input.GetAxis("Mouse Y") * rotationSpeed;
+        currentX += Input.GetAxis("Mouse X") * rotationSpeed;
+        currentY += Input.GetAxis("Mouse Y") * rotationSpeed;
         
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         currentZoom += scroll * scrollSensitivity;
