@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterController : MonoBehaviour
@@ -108,6 +110,10 @@ public class CharacterController : MonoBehaviour
             if (attacks[attackIndex].position != null)
             {
                 Instantiate(attacks[attackIndex].vfx, attacks[attackIndex].position.position, attacks[attackIndex].position.rotation);
+            }
+            else
+            {
+                Instantiate(attacks[attackIndex].vfx, transform.position, quaternion.identity);
             }
         }
 
