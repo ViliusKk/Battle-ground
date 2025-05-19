@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -19,6 +20,7 @@ public class CharacterController : MonoBehaviour
     [Header("Attack")]
     public int minDamage = 1;
     public int maxDamage = 10;
+    private float attackCooldown = 2f;
 
     private float dashTimer;
     private bool isGrounded;
@@ -26,13 +28,12 @@ public class CharacterController : MonoBehaviour
     private Vector3 moveInput;
     private Vector3 moveVelocity;
     private int attackIndex;
-    private float attackCooldown = 1f;
     private float attackTimer;
     
     
     [Header("Animations")]
     public Animator animator;
-    public string[] attacks;
+    public AttackInfo[] attacks;
     
     void Start()
     {
@@ -57,7 +58,7 @@ public class CharacterController : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && attackTimer >= attackCooldown)
         {
-            Attack();
+            StartCoroutine(Attack());
         }
 
         if (transform.forward != Vector3.zero)
@@ -90,7 +91,7 @@ public class CharacterController : MonoBehaviour
         dashTimer = 0;
     }
 
-    void Attack()
+    IEnumerator Attack()
     {
         var damage = Random.Range(minDamage, maxDamage);
         print(damage);
@@ -99,7 +100,18 @@ public class CharacterController : MonoBehaviour
         
         //animator.Play(attacks[Random.Range(0, attacks.Length)]); // my version
         
-        animator.Play(attacks[attackIndex++]); // teacher's version
+        animator.Play(attacks[attackIndex].name);
+        yield return new WaitForSeconds(attacks[attackIndex].delay);
+
+        if (attacks[attackIndex].vfx != null)
+        {
+            if (attacks[attackIndex].position != null)
+            {
+                Instantiate(attacks[attackIndex].vfx, attacks[attackIndex].position.position, attacks[attackIndex].position.rotation);
+            }
+        }
+
+        attackIndex++;
         attackIndex %= attacks.Length;
 
         attackTimer = 0;
