@@ -664,7 +664,6 @@ MonoBehaviour:
   animator: {fileID: 1717259251}
   attacks:
   - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1153565362
 GameObject:
   m_ObjectHideFlags: 0
