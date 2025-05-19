@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterController : MonoBehaviour
 {
+    public Transform visuals;
+    
     [Header("Movement")]
     public float moveSpeed = 6f;
     public float jumpForce = 10f;
@@ -56,6 +58,12 @@ public class CharacterController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && attackTimer >= attackCooldown)
         {
             Attack();
+        }
+
+        if (transform.forward != Vector3.zero)
+        {
+            var targetRotation = Quaternion.LookRotation(moveInput, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
         
         dashTimer += Time.deltaTime;

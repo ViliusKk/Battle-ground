@@ -276,6 +276,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 10}
   rotationSpeed: 5
   scrollSensitivity: 2
+  minZoom: 1
+  maxZoom: 10
 --- !u!1 &366546505
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90805cb278f73448e8d2b6663e27d2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visuals: {fileID: 1153565363}
   moveSpeed: 5
   jumpForce: 10
   dashForce: 6
